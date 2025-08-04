@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>dialy</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: url('image/kamaboko.jpeg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #555;
+    }
+
+    .date-input, .save-button {
+      margin: 10px 0;
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    .diary-area {
+      width: 100%;
+      height: 400px;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #f0f0f0;
+      border: 1px solid #aaa;
+      box-sizing: border-box;
+      resize: vertical;
+    }
+
+    .save-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .save-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>dialy</h1>
+
+    <input type="date" class="date-input" id="diary-date">
+    <textarea class="diary-area" id="diary-text" placeholder="ここに日記を書く..."></textarea>
+    <button class="save-button" onclick="downloadDiary()">保存</button>
+  </div>
+
+  <script>
+    const dateInput = document.getElementById("diary-date");
+    dateInput.valueAsDate = new Date();
+
+    function downloadDiary() {
+      const dateStr = dateInput.value;
+      const text = document.getElementById("diary-text").value;
+
+      const blob = new Blob([text], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `diary-${dateStr}.txt`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+  </script>
+</body>
+</html>
